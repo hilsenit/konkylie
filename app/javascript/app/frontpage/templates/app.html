@@ -1,16 +1,10 @@
-<h2>Hej {{loginForm}}</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
-  <div class="row">
-    <ul>
-      <li>
-        <input type="text" name="email" placeholder="Email" required [formControl]="email">
-      </li>
-      <li>
-        <input type="password" name="password" placeholder="Password" required [formControl]="password">
-      </li>
-      <li>
-        <button type="submit">Register</button>
-      </li>
-    </ul>
-  </div>
-</form>
+<div *ngIf="isUserLoggedIn()">
+  <button (click)="logOut()">Log ud</button>
+</div>
+<div *ngIf="!isUserLoggedIn()">
+  <form [formGroup]="loginForm" (ngSubmit)="logInSubmit(loginForm)">
+    <input type="text" name="email" placeholder="Email" required [formControl]="email">
+    <input type="password" name="password" placeholder="Password" required [formControl]="password">
+    <button type="submit">Log ind</button>
+  </form>
+</div>

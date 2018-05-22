@@ -10,6 +10,7 @@ import './styles/app.component.sass';
   template: AppHTML
 })
 export class AppComponent {
+  signed_in: boolean;
   output: any;
   loginForm: FormGroup;
   email: AbstractControl;
@@ -19,7 +20,8 @@ export class AppComponent {
     private _tokenService: Angular2TokenService,
     private _fb: FormBuilder
   ) {
-    this._tokenService.init();
+    this._tokenService.init({validateTokenPath: "/auth/validate_token"});
+    this.signed_in = this._tokenService.userSignedIn();
     this.loginForm = _fb.group({
       "email": [""],
       "password": [""]
@@ -28,23 +30,36 @@ export class AppComponent {
     this.password = this.loginForm.controls["password"];
   }
 
-  onSubmit(control: FormControl): void { //hvorfor FormControl?
-    debugger;
+  isUserLoggedIn() {
+    return this._tokenService.userSignedIn();
+  }
+
+  logOut() {
+    this._tokenService.signOut().subscribe(
+      res =>      console.log(res),
+      error =>    console.log(error)
+    );
+  }
+
+  logInSubmit(control: FormControl): void { //hvorfor FormControl?
     this.output = null;
-    this._tokenService.registerAccount({
+    this._tokenService.signIn({
       email: control.value.email,
       password: control.value.password,
-      passwordConfirmation: control.value.password
     }).subscribe(
       res => {
         // this.registerData = <RegisterData>{};
+        // localStorage.setItem('currentUser', JSON.stringify({ token: token, name: name }));
         this.output       = res;
-        debugger;
+        console.log(res);
+
       }, error => {
         // this.registerData = <RegisterData>{};
         this.output       = error;
-        debugger;
-      }
+        console.log(error);
+      },
+      () => { this.signed_in = this._tokenService.userSignedIn() }
+        
     );
   }
 }
