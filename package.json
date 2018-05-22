@@ -1,0 +1,23 @@
+{
+  "name": "KonkylieApp",
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^6.0.2",
+    "@angular/compiler": "^6.0.2",
+    "@angular/core": "^6.0.2",
+    "@angular/platform-browser": "^6.0.2",
+    "@angular/platform-browser-dynamic": "^6.0.2",
+    "@rails/webpacker": "3.5",
+    "@types/node": "^10.1.2",
+    "bootstrap": "4.0.0",
+    "ts-loader": "3.5.0",
+    "typescript": "^2.8.3",
+    "core-js": "^2.5.6",
+    "rxjs": "^6.2.0",
+    "html-loader": "^0.5.5",
+    "zone.js": "^0.8.26"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "2.11.2"
+  }
+}
