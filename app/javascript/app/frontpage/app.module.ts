@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { Angular2TokenService } from 'angular2-token';
 import { AuthService } from './services/auth.service';
 import { AppComponent } from './app.component';
+import { UserComponent } from './user.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { AppComponent } from './app.component';
     ReactiveFormsModule
   ],
   declarations: [
-    AppComponent
+    AppComponent, UserComponent
   ],
   providers: [Angular2TokenService, AuthService],
   bootstrap: [AppComponent]

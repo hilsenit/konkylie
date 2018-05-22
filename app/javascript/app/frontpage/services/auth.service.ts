@@ -1,11 +1,10 @@
-import { Injectable, Output, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Angular2TokenService } from 'angular2-token';
 
 @Injectable()
 
 export class AuthService {
-  
   
   constructor(
     private _token: Angular2TokenService

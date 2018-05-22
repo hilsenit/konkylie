@@ -1,0 +1,10 @@
+<div *ngIf="_auth.isUserLoggedIn()">
+  <button (click)="_auth.logUserOut()">Log ud</button>
+</div>
+<div *ngIf="!_auth.isUserLoggedIn()">
+  <form [formGroup]="loginForm" (ngSubmit)="_auth.logUserIn(loginForm)">
+    <input type="text" name="email" placeholder="Email" required [formControl]="email">
+    <input type="password" name="password" placeholder="Password" required [formControl]="password">
+    <button type="submit">Log ind</button>
+  </form>
+</div>
