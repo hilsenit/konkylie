@@ -14,6 +14,9 @@ gem 'jbuilder', '~> 2.5'
 
 # Added
 gem 'webpacker'
+gem 'devise'
+gem 'devise_token_auth'
+gem 'angular_rails_csrf'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

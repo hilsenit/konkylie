@@ -20,6 +20,18 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/forms@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-6.0.2.tgz#a0647930e8b6e7fbd48f55eb69b399a41bcd091a"
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/http@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/http/-/http-6.0.2.tgz#bd0db5b296c45ab314ef38208a40a39f82557e82"
+  dependencies:
+    tslib "^1.9.0"
+
 "@angular/platform-browser-dynamic@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-6.0.2.tgz#755689df9f02bbcb270c7872a75a2ffe7e0b0c33"
@@ -29,6 +41,12 @@
 "@angular/platform-browser@^6.0.2":
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-6.0.2.tgz#19f56f6efbd0e7af5f35fe2f8cde3557dc8ba689"
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/router@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/router/-/router-6.0.2.tgz#a7c925751accede6c5b4a8369170a53f3a48b940"
   dependencies:
     tslib "^1.9.0"
 
@@ -127,6 +145,10 @@ alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
+
+angular2-token@^0.2.0-beta.14:
+  version "0.2.0-beta.14"
+  resolved "https://registry.yarnpkg.com/angular2-token/-/angular2-token-0.2.0-beta.14.tgz#ed23b461f698b5e24cf472946ba1032f631c3cc4"
 
 ansi-html@0.0.7:
   version "0.0.7"
@@ -5063,6 +5085,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   resolved "https://registry.yarnpkg.com/run-queue/-/run-queue-1.0.3.tgz#e848396f057d223f24386924618e25694161ec47"
   dependencies:
     aproba "^1.1.1"
+
+rxjs-compat@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.1.0.tgz#935059623ee4c167728c9dd03ee6e4468cc5b583"
 
 rxjs@^6.2.0:
   version "6.2.0"
