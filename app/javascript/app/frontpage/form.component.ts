@@ -13,7 +13,6 @@ export class FormComponent {
 
   constructor(
     private _fb: FormBuilder,
-    private _val: Validator
   ) {
     this.podcastForm = _fb.group({
       title: [""],
