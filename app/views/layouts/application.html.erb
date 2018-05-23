@@ -8,20 +8,18 @@
     <%= javascript_include_tag 'application' %>
 
     <!-- PODLOVE -->
-    <script src="https://cdn.podlove.org/web-player/embed.js"></script>
 
     <%= stylesheet_pack_tag 'application' %>
     <%= javascript_pack_tag 'application' %>
 
+    <!-- embed.js, the rest in public folder -->
+    <%= javascript_pack_tag "podlove" %>
   </head>
 
   <body>
-
     <div id="example"></div>
-    <%# <script> %>
-    <%#     podlovePlayer('#example', './fixtures/example.json'); %>
-    <%# </script> %>
 
+    <%= render partial: "partials/podlove_json" %>
     <%= yield %>
   </body>
 </html>

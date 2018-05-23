@@ -10,4 +10,5 @@ import './styles/app.component.sass';
 })
 
 export class AppComponent {
+
 }
