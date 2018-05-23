@@ -1,11 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+
 import { Angular2TokenService } from 'angular2-token';
 import { AuthService } from './services/auth.service';
 import { PodcastService } from './services/podcast.service';
+
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
 import { FormComponent } from './form.component';
@@ -17,7 +19,8 @@ import { FormComponent } from './form.component';
     HttpModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   declarations: [
     AppComponent, UserComponent, FormComponent

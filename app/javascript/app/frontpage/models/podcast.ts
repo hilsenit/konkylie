@@ -7,5 +7,5 @@ export class Podcast {
   publicationDate: string;
   poster: string;
   duration: string;
-  // audios: Audio[]
+  audios: Audio[]
 }
