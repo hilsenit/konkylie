@@ -1,7 +1,11 @@
-<div *ngIf="_auth.isUserLoggedIn()">
+<button (click)="userData()"></button>
+<div *ngIf="(_auth.userSignedIn$ | async)">
+  <h2>Du er logget ind!</h2>
+  <div>{{_token.currentUserData.email}}</div>
   <button (click)="_auth.logUserOut()">Log ud</button>
 </div>
-<div *ngIf="!_auth.isUserLoggedIn()">
+<div *ngIf="!(_auth.userSignedIn$ | async)">
+  <h2>Du er logget ud!</h2>
   <form [formGroup]="loginForm" (ngSubmit)="_auth.logUserIn(loginForm)">
     <input type="text" name="email" placeholder="Email" required [formControl]="email">
     <input type="password" name="password" placeholder="Password" required [formControl]="password">

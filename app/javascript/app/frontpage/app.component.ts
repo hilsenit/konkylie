@@ -1,4 +1,6 @@
 import { Component } from '@angular/core'; 
+import { AuthService } from './services/auth.service';
+import { UserData } from 'angular2-token';
 import AppHTML from './templates/app.html';
 import './styles/app.component.sass';
 
@@ -8,5 +10,4 @@ import './styles/app.component.sass';
 })
 
 export class AppComponent {
-  
 }

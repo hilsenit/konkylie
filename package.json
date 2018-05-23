@@ -10,6 +10,7 @@
     "@angular/platform-browser": "^6.0.2",
     "@angular/platform-browser-dynamic": "^6.0.2",
     "@angular/router": "^6.0.2",
+    "@podlove/podlove-web-player": "^4.0.9",
     "@rails/webpacker": "3.5",
     "@types/node": "^10.1.2",
     "angular2-token": "^0.2.0-beta.14",

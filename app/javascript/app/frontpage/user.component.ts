@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Angular2TokenService, RegisterData } from 'angular2-token';
+import { Component, OnInit } from '@angular/core';
+import { Angular2TokenService, UserData } from 'angular2-token';
 import { FormControl, FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import UserHTML from './templates/user.html';
@@ -9,7 +9,8 @@ import './styles/user.component.sass';
   selector: 'user',
   template: UserHTML
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
+  current_user: UserData = null;
   signed_in: boolean;
   output: any;
   loginForm: FormGroup;
@@ -18,11 +19,22 @@ export class UserComponent {
   
   constructor(
     private _auth: AuthService,
+    private _token: Angular2TokenService,
     private _fb: FormBuilder
   ) {
-    this._auth.init({validateTokenPath: "/auth/validate_token"});
-    this.signed_in = this._auth.isUserLoggedIn();
+    this._token.init({validateTokenPath: "/auth/validate_token"});
     this.setForm();
+  }
+
+  ngOnInit() {
+    if (this._auth.userSignedIn$) { this.setUser(); }
+  }
+
+  setUser() {
+    this._token.validateToken().subscribe(
+      res => { this.current_user = res.json().data },
+      err => console.log(err)
+    )
   }
 
   setForm() {
