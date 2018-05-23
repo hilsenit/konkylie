@@ -1,33 +1,37 @@
-<div class="container">
+<div class="container mt-4">
+
   <form [formGroup]="podcastForm" (ngSubmit)="podcastSubmit(podcastForm)">
+
     <div class="form-group">
       <label for="title">Titel</label>
-      <input class="form-control" type="text" formControlName="title" />
-    </div>
-    <div class="form-group">
-      <label for="subtitle">Undertitel</label>
-      <input class="form-control" type="text" formControlName="subtitle" />
+      <input class="form-control form-control-lg" placeholder="Indtast titlen på podcastet" type="text" formControlName="title" />
     </div>
 
-    <div formArrayName="audios">
-      <div *ngFor="let audio of podcastForm.controls.audios.controls; let i=index">
+    <div class="form-group">
+      <label for="subtitle">Undertitel</label>
+      <input class="form-control" type="text" placeholder="Indtast en undertitel, hvis der er en" formControlName="subtitle" />
+    </div>
+
+    <div formArrayName="audios" *ngFor="let audio of podcastForm.get('audios').controls; let i=index;">
         <button *ngIf="podcastForm.controls.audios.controls.length > 1" (click)="removeAudio(i)">Fjern audio</button>
-      
-        <div formControlName="{{i}}">
+
+        <div [formGroupName]="i">
           <div class="form-group"> <!-- audio titel -->
             <label>Audio titel</label>
-            <input type="text" formControlName="titel"> 
+            <input type="text" formControlName="title"> 
           </div>
           <div class="form-group"> <!-- audio url -->
             <label>Url</label>
             <input type="text" formControlName="url"> 
           </div>
         </div><!-- audio end -->
-      </div><!-- let loop end -->
       <button (click)="addAudio()">Tilføj audio</button>
     </div><!-- array audios end -->
 
     <hr>
+
     <input type="submit" value="Gem podcast"/>
+
   </form>
-    </div>
+
+</div>

@@ -21,12 +21,12 @@ export class FormComponent {
       publicationDate: [""],
       poster: [""],
       audios: this._fb.array([
-        this.initAudio(),
+        this.initAudio()
       ]) 
     });
   }
 
-  initAudio() {
+  initAudio(): FormGroup {
     return this._fb.group({
       title: [""],
       url: [""],
@@ -35,17 +35,16 @@ export class FormComponent {
   }
 
   addAudio() {
-    const control = <FormArray>this.podcastForm.controls["audios"];
-    control.push(this.initAudio());
+    const array_control = <FormArray>this.podcastForm.controls["audios"];
+    array_control.push(this.initAudio());
   }
    
   removeAudio(i: number) {
-    const control = <FormArray>this.podcastForm.controls["audios"];
-    control.removeAt(i);
+    const array_control = <FormArray>this.podcastForm.controls["audios"];
+    array_control.removeAt(i);
   }
 
   podcastSubmit(control: FormControl): void {
-    debugger;
     console.log("HEJ");
   }
 

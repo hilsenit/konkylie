@@ -7,19 +7,20 @@
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
 
-    <!-- PODLOVE -->
-
     <%= stylesheet_pack_tag 'application' %>
     <%= javascript_pack_tag 'application' %>
 
+    <!-- PODLOVE REMOVED -->
     <!-- embed.js, the rest in public folder -->
-    <%= javascript_pack_tag "podlove" %>
+    <%# <%= javascript_pack_tag "podlove" %1> %>
   </head>
 
   <body>
-    <div id="example"></div>
 
-    <%= render partial: "partials/podlove_json" %>
+    <!-- PODLOVE REMOVED -->
+    <%# <div id="example"></div> %>
+    <%# <%= render partial: "partials/podlove_json" %1> %>
+
     <%= yield %>
   </body>
 </html>
