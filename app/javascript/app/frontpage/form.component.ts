@@ -1,10 +1,10 @@
 import { Component } from '@angular/core'; 
-import { FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
+import { Validator, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
 
 @Component({
-  selector: 'podcast-form',
+  selector: 'konk-podcast-form',
   template: FormHTML
 })
 
@@ -12,7 +12,8 @@ export class FormComponent {
   podcastForm: FormGroup;
 
   constructor(
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _val: Validator
   ) {
     this.podcastForm = _fb.group({
       title: [""],

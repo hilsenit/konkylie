@@ -6,7 +6,7 @@ import UserHTML from './templates/user.html';
 import './styles/user.component.sass';
 
 @Component({
-  selector: 'user',
+  selector: 'konk-user',
   template: UserHTML
 })
 export class UserComponent implements OnInit {

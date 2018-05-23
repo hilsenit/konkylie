@@ -5,7 +5,7 @@ import AppHTML from './templates/app.html';
 import './styles/app.component.sass';
 
 @Component({
-  selector: 'app',
+  selector: 'konk-app',
   template: AppHTML
 })
 
