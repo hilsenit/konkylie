@@ -1,5 +1,7 @@
-import { Component } from '@angular/core'; 
+import { Component, OnInit } from '@angular/core'; 
 import { FormGroup, FormControl, FormBuilder, AbstractControl } from '@angular/forms';
+import { PodcastService } from './services/podcast.service';
+import { Podcast } from './models/podcast';
 import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
 
@@ -8,10 +10,14 @@ import "./styles/form.component.sass";
   template: FormHTML
 })
 
-export class FormComponent {
+export class FormComponent implements OnInit {
+  podcasts: Podcast[];
   podcastForm: FormGroup;
 
-  constructor(private _fb: FormBuilder) {
+  constructor(
+    private _fb: FormBuilder,
+    private _podServ: PodcastService
+  ) {
     
     this.podcastForm = _fb.group({
       "title": [""],
@@ -27,6 +33,13 @@ export class FormComponent {
         "url": [""],
       },
     })
+  }
+
+  ngOnInit() {
+    this._podServ.getPodcasts().subscribe(
+      podcasts => this.podcasts = podcasts,
+      err => console.log(err)
+    )
   }
 
 }
