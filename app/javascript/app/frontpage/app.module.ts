@@ -19,8 +19,7 @@ import { FormComponent } from './form.component';
     HttpModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule,
-    RouterModule
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent, UserComponent, FormComponent

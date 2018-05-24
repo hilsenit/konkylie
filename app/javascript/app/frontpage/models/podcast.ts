@@ -9,5 +9,6 @@ export class Podcast {
   publicationDate: string;
   poster: string;
   duration: string;
+  presigned_url?: string; // Only for a short time
   audios: Audio[]
 }

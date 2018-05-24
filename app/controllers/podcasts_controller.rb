@@ -18,7 +18,8 @@ class PodcastsController < ApplicationController
     podcast = Podcast.new(podcast_params)
     if podcast.save
       # Arhhhh TO_JSON!
-      render json: podcast.to_json(include: :audios), status: 200
+      response = { podcast: podcast.to_json(include: :audios), presigned_url: podcast.presigned_url }
+      render json: response, status: 200
     else
       respond_with_errors(podcast.errors)
     end
@@ -39,8 +40,7 @@ class PodcastsController < ApplicationController
       :poster,
       :duration,
       audios_attributes:
-        [:podcast_id, :url, :mimeType, :size, :title, :file])
+        [:podcast_id, :presigned_url, :url, :mimeType, :size, :title, :file])
   end
-
 
 end
