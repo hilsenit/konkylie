@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'; 
 import { Validator, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
+import { PodcastService } from './services/podcast.service';
 import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
 
@@ -13,6 +14,7 @@ export class FormComponent {
 
   constructor(
     private _fb: FormBuilder,
+    private _podServ: PodcastService
   ) {
     this.podcastForm = _fb.group({
       title: [""],
@@ -44,8 +46,11 @@ export class FormComponent {
     array_control.removeAt(i);
   }
 
-  podcastSubmit(control: FormControl): void {
-    console.log("HEJ");
+  podcastSubmit(group: any): void {
+    this._podServ.savePocast(group).subscribe(
+      res => console.log(res),
+      err => console.log(err)
+    )
   }
 
 }

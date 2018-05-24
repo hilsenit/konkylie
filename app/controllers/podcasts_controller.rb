@@ -15,6 +15,7 @@ class PodcastsController < ApplicationController
   end
 
   def create
+    byebug
     podcast = Podcast.new(podcast_params)
     respond = podcast.save ? "true" : "false"
     respond_to { |format| format.json { render json: { "success": respond} } }

@@ -1,6 +1,7 @@
 import { Audio } from './audio';
+
 export class Podcast {
-  id: number;
+  id?: number; //Is not present on new
   title: string;
   subtitle: string;
   summary: string;
