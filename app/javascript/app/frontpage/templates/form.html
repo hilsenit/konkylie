@@ -16,23 +16,19 @@
       <textarea class="form-control" placeholder="Resumé" rows="3" formControlName="summary"></textarea>
     </div>
 
+
     <div formArrayName="audios_attributes" *ngFor="let audio of podcastForm.get('audios_attributes').controls; let i=index;">
 
       <div class="border p-2 m-2" [formGroupName]="i">
-        <button class="btn btn-warning"
-          *ngIf="podcastForm.controls.audios_attributes.controls.length > 1" (click)="removeAudio(i)">Fjern</button>
-        <div class=""><span class="small p-2">{{i + 1}}</span></div>
-        <div class="form-group"> <!-- audio titel -->
-          <input type="text" placeholder="Audio titel" formControlName="title"> 
-        </div>
-        <div class="form-group"> <!-- audio url -->
-          <input type="text" placeholder="Url" formControlName="url"> 
-          <small class="form-text text-muted">Du skal huske http eller https før URL'en</small>
+        <small *ngIf="file.size && file.type && file.name" class="py-2 form-text text-gray text-muted">
+          Størrelse: {{file.size}} B / Type: {{file.type}}
+        </small>
+        <div class="form-group">
+          <input type="file" class="form-control-file" (change)="setFileField($event)">
         </div>
       </div>
 
     </div><!-- formArray end -->
-    <button class="btn btn-secondary" (click)="addAudio()">Tilføj audiofil</button>
     <hr>
 
     <input type="submit" value="Gem podcast" class="btn btn-primary"/>
