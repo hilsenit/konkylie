@@ -41,10 +41,8 @@ export class FormComponent {
   initAudio(): FormGroup {
     return this._fb.group({
       title: [""],
-      url: ["", Validators.required],
       mimeType: [""],
-      size: [""],
-      file: [""]
+      size: [""]
     })
   }
 

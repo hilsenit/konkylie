@@ -1,3 +1,4 @@
+<h3 class="pt-4 text-center">Oprettelse af podcast</h3>
 <div *ngIf="successfull_save" class="notice bg-success text-white text-center">Det lykkedes dig at oprette {{podcast_title | uppercase }}!</div>
 <div *ngIf="error_message" class="notice bg-warning text-white text-center">Løs fejlen før du fortsætter: {{error_message}}</div>
 <div class="container mt-4">
@@ -16,13 +17,15 @@
       <textarea class="form-control" placeholder="Resumé" rows="3" formControlName="summary"></textarea>
     </div>
 
-
     <div formArrayName="audios_attributes" *ngFor="let audio of podcastForm.get('audios_attributes').controls; let i=index;">
 
-      <div class="border p-2 m-2" [formGroupName]="i">
+      <div class="border p-4" [formGroupName]="i">
+        <h6>Fil:</h6>
+
         <small *ngIf="file.size && file.type && file.name" class="py-2 form-text text-gray text-muted">
-          Størrelse: {{file.size}} B / Type: {{file.type}}
+          Størrelse: {{file.size}} B<b>.</b> Type: {{file.type}}
         </small>
+
         <div class="form-group">
           <input type="file" class="form-control-file" (change)="setFileField($event)">
         </div>

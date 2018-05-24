@@ -15,6 +15,7 @@ class PodcastsController < ApplicationController
   end
 
   def create
+    byebug
     podcast = Podcast.new(podcast_params)
     if podcast.save
       render json: podcast, status: 200
@@ -38,7 +39,7 @@ class PodcastsController < ApplicationController
       :poster,
       :duration,
       audios_attributes:
-        [:podcast_id, :url, :mimeType, :size, :title])
+        [:podcast_id, :url, :mimeType, :size, :title, :file])
   end
 
 
