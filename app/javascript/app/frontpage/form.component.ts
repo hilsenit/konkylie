@@ -1,15 +1,16 @@
 import { Component } from '@angular/core'; 
 import { Validator, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
-import { PodcastService } from './services/podcast.service';
-import FormHTML from './templates/form.html';
+import { PodcastService } from './services/podcast.service'; import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
 
 @Component({
   selector: 'konk-podcast-form',
   template: FormHTML
 })
-
 export class FormComponent {
+  successfull_save: boolean = false;
+  error_message: string; 
+  podcast_title: string;
   podcastForm: FormGroup;
 
   constructor(
@@ -22,7 +23,7 @@ export class FormComponent {
       summary: [""],
       publicationDate: [""],
       poster: [""],
-      audios: this._fb.array([
+      audios_attributes: this._fb.array([
         this.initAudio()
       ]) 
     });
@@ -46,10 +47,18 @@ export class FormComponent {
     array_control.removeAt(i);
   }
 
-  podcastSubmit(group: any): void {
-    this._podServ.savePocast(group).subscribe(
-      res => console.log(res),
-      err => console.log(err)
+  podcastSubmit(group: FormGroup) {
+    this._podServ.savePodcast(group.value).subscribe(
+      res => { 
+        debugger;
+        this.successfull_save = true;
+        this.podcast_title = res.title;
+      },
+      err => {
+        debugger;
+        this.error_message = err.json().errors.title[0];
+        console.log(err);
+      }
     )
   }
 

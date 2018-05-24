@@ -7,9 +7,6 @@ import { map } from "rxjs/operators";
 @Injectable()
 
 export class PodcastService {
-  headers = new Headers({
-    "Content-Type": "application/json"
-  })
 
   constructor(
     private _http: Http
@@ -19,13 +16,15 @@ export class PodcastService {
     return res.json();
   }
 
-
   getPodcasts(): Observable<Podcast[]> {
     return this._http.get("/podcasts.json").pipe(map(this.extractData));
   }
 
-  savePocast(podcast_params: Podcast): Observable<Podcast> {
-    return this._http.post("/podcasts", JSON.stringify(podcast_params), { headers: this.headers })
+  savePodcast(podcast_params: Podcast): Observable<Podcast> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let data = JSON.stringify({"podcast": podcast_params}); // Rails need the parent param "podcast"
+    return this._http.post("/podcasts", data, { headers: headers })
       .pipe(map(this.extractData))
   }
   
