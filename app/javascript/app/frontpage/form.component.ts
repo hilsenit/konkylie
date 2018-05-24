@@ -49,19 +49,15 @@ export class FormComponent {
   podcastSubmit(group: FormGroup) {
     let audios = group.get("audios_attributes.0");
     [audios.value.size, audios.value.title, audios.value.mimeType] = [this.file.size, this.file.name, this.file.type];
-    console.log(group.value);
+    console.log("Before saving - form values: " + group.value);
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
-        this.successfull_save = true;
-        if (this.file) { 
-          this.uploadToS3(res.presigned_url); 
-        };
-        this.podcast_title = res.title;
         debugger;
+        this.successfull_save = true;
+        this.podcast_title = res.title;
       },
       err => {
         this.error_message = err.json().errors.title[0];
-        debugger;
         console.log(err);
       }
     )

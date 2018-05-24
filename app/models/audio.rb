@@ -1,5 +1,6 @@
 class Audio < ApplicationRecord
-  belongs_to :podcast
+  include Amazon
+  attr_accessor :presigned_url #Is being returned to view in json
 
-  validates :url, presence: true
+  belongs_to :podcast
 end

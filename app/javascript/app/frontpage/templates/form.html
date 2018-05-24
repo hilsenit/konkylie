@@ -22,7 +22,7 @@
       <div class="border p-4" [formGroupName]="i">
         <h6>Fil:</h6>
 
-        <small *ngIf="file.size && file.type && file.name" class="py-2 form-text text-gray text-muted">
+        <small *ngIf="file && file.size && file.type" class="py-2 form-text text-gray text-muted">
           Størrelse: {{file.size}} B<b>.</b> Type: {{file.type}}
         </small>
 

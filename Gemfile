@@ -34,4 +34,5 @@ gem 'devise_token_auth'
 gem 'angular_rails_csrf'
 gem 'omniauth'
 gem 'aws-sdk'
+gem 'figaro'
 
