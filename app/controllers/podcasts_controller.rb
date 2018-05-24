@@ -17,8 +17,7 @@ class PodcastsController < ApplicationController
   def create
     podcast = Podcast.new(podcast_params)
     if podcast.save
-      byebug
-      # Hvor fanden skulle jeg vide det fra!
+      # Arhhhh TO_JSON!
       render json: podcast.to_json(include: :audios), status: 200
     else
       respond_with_errors(podcast.errors)

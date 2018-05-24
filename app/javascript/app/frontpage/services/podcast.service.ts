@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable, pipe } from 'rxjs';
 import { Podcast } from '../models/podcast';
 import { map } from "rxjs/operators";
@@ -14,6 +14,17 @@ export class PodcastService {
 
   extractData(res: Response) {
     return res.json();
+  }
+
+  uploadToS3(file: File, pre_url: string): Observable<string> {
+    const headers = new Headers({'Content-Type': 'audio/mp3'});
+    const options = new RequestOptions({ headers: headers});
+    return this._http.put(pre_url, file, options).pipe(map(
+      res => {
+        console.log(res);
+        return res.json();
+      }
+    ))
   }
 
   getPodcasts(): Observable<Podcast[]> {

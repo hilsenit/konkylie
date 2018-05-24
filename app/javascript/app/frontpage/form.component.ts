@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'; 
+import { Http } from '@angular/http';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { PodcastService } from './services/podcast.service'; import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
@@ -47,12 +48,17 @@ export class FormComponent {
   }
 
   podcastSubmit(group: FormGroup) {
+  var file = this.file; // Couldn't be find in the subscribe
     let audios = group.get("audios_attributes.0");
     [audios.value.size, audios.value.title, audios.value.mimeType] = [this.file.size, this.file.name, this.file.type];
     console.log("Before saving - form values: " + group.value);
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
-        debugger;
+        let presigned_url = res.audios[0].url;
+        this._podServ.uploadToS3(file, presigned_url).subscribe(
+          aws_res => { debugger; console.log(aws_res) }, 
+          aws_err => console.log(aws_err)
+        )
         this.successfull_save = true;
         this.podcast_title = res.title;
       },
@@ -63,8 +69,5 @@ export class FormComponent {
     )
   }
 
-  uploadToS3(pre_url: string): void {
-    console.log("UPLOAD TO S3");
-  }
 
 }
