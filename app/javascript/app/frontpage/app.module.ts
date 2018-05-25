@@ -34,7 +34,8 @@ import { FrontpageComponent } from './frontpage.component';
     Angular2TokenService,
     AuthService,
     PodcastService,
-    FormService
+    FormService,
+    { provide: 'Window', useValue: window }
   ],
   bootstrap: [AppComponent]
 })

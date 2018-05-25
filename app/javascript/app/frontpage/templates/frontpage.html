@@ -1,10 +1,10 @@
 <button (click)="showForm()">Opret ny podcast</button>
 <h1 class="frontpage-header">Forside</h1>
 <div *ngIf="podcasts">
-  <div *ngFor="let podcast of podcasts">
+  <div #dom_podcasts *ngFor="let podcast of podcasts; let i=index">
     <div class="title">Podcast titel: {{podcast.title}}</div>
-
-    <div class="border" *ngFor="let audio of podcast.audios">
+    <div class="border" *ngFor="let audio of podcast.audios; let aud_i=index">
+      <button (click)="setPodcast(i, audio.url)">Hør podcast</button>
       <div class="small">Audio fil url: {{audio.url}}</div> 
     </div>
   </div>

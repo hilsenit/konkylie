@@ -21,9 +21,11 @@
     "rxjs-compat": "^6.1.0",
     "ts-loader": "3.5.0",
     "typescript": "^2.8.3",
+    "underscore": "^1.9.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@types/underscore": "^1.8.8",
     "webpack-dev-server": "2.11.2"
   }
 }

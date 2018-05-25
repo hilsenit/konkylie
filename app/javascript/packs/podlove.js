@@ -1,1 +1,1 @@
-import "@podlove/podlove-web-player/dist/embed.js";
+import "@podlove/podlove-web-player/dist/embed";
