@@ -16,14 +16,13 @@ export class PodcastService {
     return res.json();
   }
 
-  uploadToS3(file: File, pre_url: string): Observable<string> {
+  uploadToS3(file: File, pre_url: string): Observable<any> {
     const headers = new Headers({'Content-Type': 'audio/mp3'});
     const options = new RequestOptions({ headers: headers});
     return this._http.put(pre_url, file, options).pipe(map(
-      res => {
-        console.log(res);
-        return res.json();
-      }
+      res => { return res },
+      err => console.log(err)
+    
     ))
   }
 

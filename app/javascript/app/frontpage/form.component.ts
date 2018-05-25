@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'; 
+import { Component, Output, EventEmitter } from '@angular/core'; 
 import { Http } from '@angular/http';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { PodcastService } from './services/podcast.service';
@@ -11,6 +11,7 @@ import "./styles/form.component.sass";
   template: FormHTML
 })
 export class FormComponent {
+  @Output() show_form = new EventEmitter();
   uploading_file_to_aws: boolean = false;
   file: File;
   successfull_save: boolean = false;
@@ -24,6 +25,8 @@ export class FormComponent {
   ) {
     this.podcastForm = _formServ.podcastForm()
   }
+
+  showFrontpage() { this.show_form.emit(false) }
 
   setFileField(event) {
     let files: FileList = event.target.files;
@@ -44,10 +47,9 @@ export class FormComponent {
         this.uploading_file_to_aws = true;
         this._podServ.uploadToS3(file, presigned_url).subscribe(
           aws_res => { 
-            console.log(aws_res),
             this.uploading_file_to_aws = false;
-          }, 
-          aws_err => { console.log(aws_err) },
+            this.show_form.emit(false); // Remove form and show frontpage
+          } 
         )
       },
       err => {

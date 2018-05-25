@@ -17,7 +17,6 @@ module Amazon
       bucket = ENV["aws_bucket_name"]
       obj = s3.bucket(bucket).object(file_name)
       audio.podcast.presigned_url = obj.presigned_url(:put, acl: 'public-read', expires_in: 3600 * 24)
-      byebug
       audio.update_column(:url, obj.public_url)
     end
   end
