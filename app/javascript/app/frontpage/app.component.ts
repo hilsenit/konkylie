@@ -20,4 +20,6 @@ export class AppComponent {
     )
     console.log("Bruger er logged ind: " + this.user_logged_in);
   }
+
+
 }

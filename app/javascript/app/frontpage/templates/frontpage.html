@@ -4,7 +4,7 @@
   <div #dom_podcasts *ngFor="let podcast of podcasts; let i=index">
     <div class="title">Podcast titel: {{podcast.title}}</div>
     <div class="border" *ngFor="let audio of podcast.audios; let aud_i=index">
-      <button (click)="setPodcast(i, audio.url)">Hør podcast</button>
+      <button (click)="setPodcast(i)">Hør podcast</button>
       <div class="small">Audio fil url: {{audio.url}}</div> 
     </div>
   </div>
