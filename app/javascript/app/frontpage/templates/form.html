@@ -33,7 +33,8 @@
         </small>
 
         <div class="form-group">
-          <input type="file" class="form-control-file" (change)="setFileField($event)">
+          <input #file type="file" class="form-control-file" 
+            (loadeddata)="console.log('LOADET DATA')" (change)="setFileField($event, file)">
         </div>
       </div>
 

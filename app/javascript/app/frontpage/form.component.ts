@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core'; 
+import { Component, AfterViewChecked, Output, EventEmitter, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core'; 
 import { Http } from '@angular/http';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { PodcastService } from './services/podcast.service';
@@ -10,8 +10,11 @@ import "./styles/form.component.sass";
   selector: 'konk-podcast-form',
   template: FormHTML
 })
-export class FormComponent {
+
+export class FormComponent implements AfterViewChecked  {
   @Output() show_form = new EventEmitter();
+  // @ViewChildren('files') dom_files: QueryList<ElementRef>;
+  @ViewChild('file') dom_file: ElementRef;
   uploading_file_to_aws: boolean = false;
   file: File;
   successfull_save: boolean = false;
@@ -22,13 +25,20 @@ export class FormComponent {
   constructor(
     private _podServ: PodcastService,
     private _formServ: FormService
-  ) {
-    this.podcastForm = _formServ.podcastForm()
+  ) { 
+    this.podcastForm = _formServ.podcastForm();
+  } 
+
+  ngAfterViewChecked() {
+    this.dom_file.nativeElement.addEventListener('loadeddata', function() {
+      debugger;
+    });
   }
 
   showFrontpage() { this.show_form.emit(false) }
 
-  setFileField(event) {
+  setFileField(event, file) {
+    debugger;
     let files: FileList = event.target.files;
     if (files.length > 0) {
       this.file = files[0];
@@ -36,11 +46,11 @@ export class FormComponent {
     }
   }
 
-
   podcastSubmit(group: FormGroup) {
     var file = this.file;
     let audios = group.get("audios_attributes.0");
-    [audios.value.size, audios.value.title, audios.value.mimeType] = [this.file.size, this.file.name, this.file.type];
+    [audios.value.size, audios.value.title, audios.value.mimeType] = 
+                        [this.file.size, this.file.name, this.file.type];
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
         let presigned_url = res.presigned_url;

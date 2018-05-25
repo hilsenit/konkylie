@@ -26,7 +26,8 @@ export class FormService {
     return this._fb.group({
       title: [""],
       mimeType: [""],
-      size: [""]
+      size: [""],
+      duration: [""]
     })
   }
 

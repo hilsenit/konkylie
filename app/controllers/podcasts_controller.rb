@@ -40,7 +40,7 @@ class PodcastsController < ApplicationController
       :poster,
       :duration,
       audios_attributes:
-        [:podcast_id, :presigned_url, :url, :mimeType, :size, :title, :file])
+        [:podcast_id, :presigned_url, :url, :mimeType, :size, :title, :file, :duration ])
   end
 
 end
