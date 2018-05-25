@@ -11,6 +11,7 @@ import "./styles/form.component.sass";
   template: FormHTML
 })
 export class FormComponent {
+  uploading_file_to_aws: boolean = false;
   file: File;
   successfull_save: boolean = false;
   error_message: string; 
@@ -35,19 +36,19 @@ export class FormComponent {
 
   podcastSubmit(group: FormGroup) {
     var file = this.file;
-    // File is set on (change) on setFileField
     let audios = group.get("audios_attributes.0");
     [audios.value.size, audios.value.title, audios.value.mimeType] = [this.file.size, this.file.name, this.file.type];
-    console.log("Before saving - form values: " + group.value);
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
         let presigned_url = res.presigned_url;
+        this.uploading_file_to_aws = true;
         this._podServ.uploadToS3(file, presigned_url).subscribe(
-          aws_res => { console.log(aws_res) }, 
-          aws_err => console.log(aws_err)
+          aws_res => { 
+            console.log(aws_res),
+            this.uploading_file_to_aws = false;
+          }, 
+          aws_err => { console.log(aws_err) },
         )
-        this.successfull_save = true;
-        this.podcast_title = res.title;
       },
       err => {
         this.error_message = err.json().errors.title[0];
