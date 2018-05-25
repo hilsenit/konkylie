@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { Angular2TokenService } from 'angular2-token';
 import { AuthService } from './services/auth.service';
 import { PodcastService } from './services/podcast.service';
+import { FormService } from './services/form.service';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
@@ -24,7 +25,12 @@ import { FormComponent } from './form.component';
   declarations: [
     AppComponent, UserComponent, FormComponent
   ],
-  providers: [Angular2TokenService, AuthService, PodcastService],
+  providers: [
+    Angular2TokenService,
+    AuthService,
+    PodcastService,
+    FormService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

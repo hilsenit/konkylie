@@ -1,7 +1,9 @@
 import { Component } from '@angular/core'; 
 import { Http } from '@angular/http';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
-import { PodcastService } from './services/podcast.service'; import FormHTML from './templates/form.html';
+import { PodcastService } from './services/podcast.service';
+import { FormService } from './services/form.service';
+import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
 
 @Component({
@@ -11,22 +13,15 @@ import "./styles/form.component.sass";
 export class FormComponent {
   file: File;
   successfull_save: boolean = false;
-  error_message: string; podcast_title: string; podcastForm: FormGroup;
+  error_message: string; 
+  podcast_title: string; 
+  podcastForm: FormGroup;
 
   constructor(
-    private _fb: FormBuilder,
-    private _podServ: PodcastService
+    private _podServ: PodcastService,
+    private _formServ: FormService
   ) {
-    this.podcastForm = _fb.group({
-      title: [""],
-      subtitle: [""],
-      summary: [""],
-      publicationDate: [""],
-      poster: [""],
-      audios_attributes: this._fb.array([
-        this.initAudio()
-      ]) 
-    });
+    this.podcastForm = _formServ.podcastForm()
   }
 
   setFileField(event) {
@@ -37,21 +32,15 @@ export class FormComponent {
     }
   }
 
-  initAudio(): FormGroup {
-    return this._fb.group({
-      title: [""],
-      mimeType: [""],
-      size: [""]
-    })
-  }
 
   podcastSubmit(group: FormGroup) {
-    var file = this.file; // Couldn't be find in the subscribe
+    var file = this.file;
+    // File is set on (change) on setFileField
     let audios = group.get("audios_attributes.0");
     [audios.value.size, audios.value.title, audios.value.mimeType] = [this.file.size, this.file.name, this.file.type];
     console.log("Before saving - form values: " + group.value);
     this._podServ.savePodcast(group.value).subscribe(
-    res => { 
+      res => { 
         let presigned_url = res.presigned_url;
         this._podServ.uploadToS3(file, presigned_url).subscribe(
           aws_res => { console.log(aws_res) }, 
