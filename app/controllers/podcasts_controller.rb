@@ -1,8 +1,8 @@
 class PodcastsController < ApplicationController
 
   def index
-    podcasts = Podcast.includes(:audios)
-    respond_to { |format| format.json { render json: podcasts } }
+    podcasts = Podcast.all
+    render json: podcasts.to_json(include: :audios)
   end
 
   def new

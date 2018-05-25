@@ -12,6 +12,8 @@ import { FormService } from './services/form.service';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
 import { FormComponent } from './form.component';
+import { FrontpageComponent } from './frontpage.component';
+
 
 
 @NgModule({
@@ -23,7 +25,10 @@ import { FormComponent } from './form.component';
     ReactiveFormsModule
   ],
   declarations: [
-    AppComponent, UserComponent, FormComponent
+    AppComponent,
+    UserComponent,
+    FormComponent,
+    FrontpageComponent
   ],
   providers: [
     Angular2TokenService,

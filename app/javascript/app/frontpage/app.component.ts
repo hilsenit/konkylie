@@ -10,5 +10,14 @@ import './styles/app.component.sass';
 })
 
 export class AppComponent {
-
+  show_form: boolean = false;
+  user_logged_in: boolean = false;
+  constructor(
+    private _authServ: AuthService
+  ) {
+    this._authServ.userSignedIn$.subscribe(
+      res => { this.user_logged_in = res; }
+    )
+    console.log("Bruger er logged ind: " + this.user_logged_in);
+  }
 }
