@@ -4,6 +4,7 @@ export class Podcast {
   id?: number; //Is not present on new
   status: number;
   title: string;
+  icon: string;
   subtitle: string;
   summary: string;
   publicationDate: string;

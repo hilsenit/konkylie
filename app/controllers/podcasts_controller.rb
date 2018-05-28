@@ -37,6 +37,7 @@ class PodcastsController < ApplicationController
       :summary,
       :publicationDate,
       :poster,
+      :icon,
       :duration,
       audios_attributes:
         [ :podcast_id, :presigned_url, :url, :mimeType, :size, :title, :file, :duration ])

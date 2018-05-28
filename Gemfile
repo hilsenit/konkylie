@@ -36,4 +36,6 @@ gem 'angular_rails_csrf'
 gem 'omniauth'
 gem 'aws-sdk'
 gem 'figaro'
+gem 'carrierwave'
+gem 'fog-aws'
 

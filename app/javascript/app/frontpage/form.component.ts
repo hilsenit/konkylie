@@ -13,7 +13,6 @@ import "./styles/form.component.sass";
 
 export class FormComponent implements AfterViewChecked  {
   @Output() show_form = new EventEmitter();
-  // @ViewChildren('files') dom_files: QueryList<ElementRef>;
   @ViewChild('file') dom_file: ElementRef;
   @ViewChild('dom_audio') dom_audio: ElementRef; 
   uploading_file_to_aws: boolean = false;
@@ -23,6 +22,8 @@ export class FormComponent implements AfterViewChecked  {
   podcast_title: string; 
   podcastForm: FormGroup;
   duration: number;
+  image_file: File = null;
+  dom_image_src: string = undefined;
 
   constructor(
     private _podServ: PodcastService,
@@ -51,23 +52,32 @@ export class FormComponent implements AfterViewChecked  {
     this.duration = Math.round(load_event.currentTarget.duration);
   }
 
+  setImageFile(event) {
+    this.image_file = this.getOneFile(event.target.files);
+    // Set image in DOM
+    let file_reader = new FileReader();
+    file_reader.onload = (e: any) => {
+      this.dom_image_src = e.target.result;
+    }
+    file_reader.readAsDataURL(this.image_file);
+  }
 
   setFile(event, file) {
-    let files: FileList = event.target.files;
-    if (files.length > 0) {
-      this.file = files[0];
-      console.log("Bound to file: " + this.file);
-    }
-    if(this.file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
+    this.file = this.getOneFile(event.target.files);
+    if(this.file && this.file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
       let obUrl = URL.createObjectURL(this.file);
       this.dom_audio.nativeElement.setAttribute('src', obUrl);
       // document.getElementById('audio').setAttribute('src', obUrl);
     }
   }
 
+  getOneFile(files: FileList): File {
+    return files.length > 0 ? files[0] : null; 
+  }
 
   podcastSubmit(group: FormGroup) {
     var file = this.file;
+    group.icon = this.image_file;
     let audios = group.get("audios_attributes.0");
     [audios.value.size, audios.value.title, audios.value.mimeType, audios.value.duration] = 
                         [this.file.size, this.file.name, this.file.type, this.duration];
