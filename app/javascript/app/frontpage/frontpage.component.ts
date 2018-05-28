@@ -34,7 +34,6 @@ export class FrontpageComponent implements OnInit {
   showDomDuration(dur: number): string {
     let minutes = Math.floor(dur / 60);
     let rest_seconds = dur - ( minutes * 60 );
-    debugger;
     return `${minutes} minutter og ${rest_seconds} sekunder`;
   }
 
@@ -47,6 +46,12 @@ export class FrontpageComponent implements OnInit {
   showForm() {
     this.show_form.emit(true);
   }
+
+  setPodloveDuration(dur: number): string { // Nogenlunde midlertidigt
+    let minutes = Math.floor(dur / 60);
+    let rest_seconds = dur - (60 * minutes);
+    return `00:${minutes}:${rest_seconds}`;
+  }
   
   returnJSON(podcast: Podcast): any {
       return {
@@ -54,7 +59,7 @@ export class FrontpageComponent implements OnInit {
         subtitle: podcast.subtitle,
         summary: podcast.summary,
         publicationDate: podcast.publicationDate,
-        duration: '04:15:32',
+        duration: this.setPodloveDuration(podcast.audios[0].duration),
         // Mangler!
         // poster: 'https://freakshow.fm/wp-content/cache/podlove/04/662a9d4edcf77ea2abe3c74681f509/freak-show_200x200.jpg',
         // show: {
