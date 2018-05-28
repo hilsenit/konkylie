@@ -15,12 +15,14 @@ export class FormComponent implements AfterViewChecked  {
   @Output() show_form = new EventEmitter();
   // @ViewChildren('files') dom_files: QueryList<ElementRef>;
   @ViewChild('file') dom_file: ElementRef;
+  @ViewChild('dom_audio') dom_audio: ElementRef; 
   uploading_file_to_aws: boolean = false;
   file: File;
   successfull_save: boolean = false;
   error_message: string; 
   podcast_title: string; 
   podcastForm: FormGroup;
+  duration: number;
 
   constructor(
     private _podServ: PodcastService,
@@ -35,22 +37,40 @@ export class FormComponent implements AfterViewChecked  {
     });
   }
 
-  showFrontpage() { this.show_form.emit(false) }
+  showFrontpage() {
+    this.show_form.emit(false) 
+  }
 
-  setFileField(event, file) {
-    debugger;
+  getDomDuration(dur: number): {minutes: number, seconds: number}  {
+    let minutes = Math.floor(dur / 60);
+    let rest_seconds = dur - (minutes * 60);
+    return { minutes: minutes, seconds: rest_seconds }
+  }
+
+  setDuration(load_event): void { //Is called on <audio> by canplaythrough
+    this.duration = Math.round(load_event.currentTarget.duration);
+  }
+
+
+  setFile(event, file) {
     let files: FileList = event.target.files;
     if (files.length > 0) {
       this.file = files[0];
       console.log("Bound to file: " + this.file);
     }
+    if(this.file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
+      let obUrl = URL.createObjectURL(this.file);
+      this.dom_audio.nativeElement.setAttribute('src', obUrl);
+      // document.getElementById('audio').setAttribute('src', obUrl);
+    }
   }
+
 
   podcastSubmit(group: FormGroup) {
     var file = this.file;
     let audios = group.get("audios_attributes.0");
-    [audios.value.size, audios.value.title, audios.value.mimeType] = 
-                        [this.file.size, this.file.name, this.file.type];
+    [audios.value.size, audios.value.title, audios.value.mimeType, audios.value.duration] = 
+                        [this.file.size, this.file.name, this.file.type, this.duration];
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
         let presigned_url = res.presigned_url;

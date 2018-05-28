@@ -31,6 +31,13 @@ export class FrontpageComponent implements OnInit {
     )
   }
 
+  showDomDuration(dur: number): string {
+    let minutes = Math.floor(dur / 60);
+    let rest_seconds = dur - ( minutes * 60 );
+    debugger;
+    return `${minutes} minutter og ${rest_seconds} sekunder`;
+  }
+
   setPodcast(pod_i: number): void {
     let podcast = this.podcasts[pod_i];
     let podcast_dom = this.dom_podcasts.toArray()[pod_i].nativeElement;

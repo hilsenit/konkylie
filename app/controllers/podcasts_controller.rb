@@ -1,7 +1,6 @@
 class PodcastsController < ApplicationController
 
-  def index
-    podcasts = Podcast.all
+  def index podcasts = Podcast.all
     render json: podcasts.to_json(include: :audios)
   end
 
@@ -40,7 +39,7 @@ class PodcastsController < ApplicationController
       :poster,
       :duration,
       audios_attributes:
-        [:podcast_id, :presigned_url, :url, :mimeType, :size, :title, :file, :duration ])
+        [ :podcast_id, :presigned_url, :url, :mimeType, :size, :title, :file, :duration ])
   end
 
 end

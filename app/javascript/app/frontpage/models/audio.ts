@@ -5,4 +5,5 @@ export class Audio {
   mimeType: string;
   size: number;
   title: string;
+  duration: number;
 }

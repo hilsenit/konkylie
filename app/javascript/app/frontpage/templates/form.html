@@ -28,14 +28,11 @@
       <div class="border p-4" [formGroupName]="i">
         <h6>Fil:</h6>
 
-        <small *ngIf="file && file.size && file.type" class="py-2 form-text text-gray text-muted">
-          Størrelse: {{file.size}} B<b>.</b> Type: {{file.type}}
-        </small>
-
         <div class="form-group">
-          <input #file type="file" class="form-control-file" 
-            (loadeddata)="console.log('LOADET DATA')" (change)="setFileField($event, file)">
+          <input #file type="file" class="form-control-file"
+            (change)="setFile($event, file)">
         </div>
+        <audio #dom_audio (canplaythrough)="setDuration($event)" id="audio"></audio>
       </div>
 
     </div><!-- formArray end -->
