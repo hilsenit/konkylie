@@ -3,6 +3,7 @@ import { Component, Inject, OnInit, Output, Input, EventEmitter, QueryList, View
 import { PodcastService } from './services/podcast.service';
 import { Podcast } from './models/podcast';
 import FrontpageHTML from './templates/frontpage.html';
+import ShellImage from '../../images/shell.png';
 import './styles/frontpage.component.sass';
 
 @Component({
@@ -15,6 +16,7 @@ export class FrontpageComponent implements OnInit {
   @ViewChild('audio') audio: ElementRef;
   @Input() logged_in: boolean = false; 
   @Output() show_form = new EventEmitter();
+  shell_image: string = ShellImage;
   error_message: string;
   podcasts: Podcast[];
 

@@ -2,6 +2,7 @@
 <h1 class="frontpage-header">Forside</h1>
 <div *ngIf="podcasts">
   <div #dom_podcasts *ngFor="let podcast of podcasts; let i=index">
+    <img [src]="shell_image">
     <div class="title">Podcast titel: {{podcast.title}}</div>
     <div class="border" *ngFor="let audio of podcast.audios; let aud_i=index">
       <button (click)="setPodcast(i)">Hør podcast</button>
