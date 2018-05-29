@@ -12,9 +12,8 @@
   <form [formGroup]="podcastForm" (ngSubmit)="podcastSubmit(podcastForm)">
 
     <div class="form-group">
-      <img *ngIf="dom_image_src" [src]="dom_image_src" class="image-thumb">
-      <input type="file" class="form-control-file pt-2"
-        (change)="setImageFile($event)">
+      <input #image_file type="file" class="form-control-file pt-2"
+        (change)="setImageFile($event)" formControlName="icon">
     </div>
 
     <div class="form-group">

@@ -15,8 +15,8 @@ export class FormService {
       subtitle: [""],
       summary: [""],
       publicationDate: [""],
+      icon: null,
       poster: [""],
-      icon: [""],
       audios_attributes: this._fb.array([
         this.initPodcastAudio()
       ]) 

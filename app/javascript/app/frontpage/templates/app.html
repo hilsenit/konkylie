@@ -1,7 +1,7 @@
 
 <div class="container">
   <div *ngIf="error_message" class="notice bg-warning text-center">{{error_message}}</div>
-  <div *ngIf="(user_logged_in | async)" class="notice bg-success text-center">Du er logged ind</div>
+  <!-- <div *ngIf="(user_logged_in | async)" class="notice bg-success text-center">Du er logged ind</div> -->
   
   <konk-frontpage 
     *ngIf="!show_form"

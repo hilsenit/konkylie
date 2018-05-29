@@ -11,9 +11,10 @@ import "./styles/form.component.sass";
   template: FormHTML
 })
 
-export class FormComponent implements AfterViewChecked  {
+export class FormComponent {
   @Output() show_form = new EventEmitter();
   @ViewChild('file') dom_file: ElementRef;
+  @ViewChild('image_file') dom_image_file: ElementRef;
   @ViewChild('dom_audio') dom_audio: ElementRef; 
   uploading_file_to_aws: boolean = false;
   file: File;
@@ -32,12 +33,6 @@ export class FormComponent implements AfterViewChecked  {
     this.podcastForm = _formServ.podcastForm();
   } 
 
-  ngAfterViewChecked() {
-    this.dom_file.nativeElement.addEventListener('loadeddata', function() {
-      debugger;
-    });
-  }
-
   showFrontpage() {
     this.show_form.emit(false) 
   }
@@ -54,12 +49,19 @@ export class FormComponent implements AfterViewChecked  {
 
   setImageFile(event) {
     this.image_file = this.getOneFile(event.target.files);
-    // Set image in DOM
-    let file_reader = new FileReader();
-    file_reader.onload = (e: any) => {
-      this.dom_image_src = e.target.result;
+    if(this.image_file) {
+      const file_reader = new FileReader();
+      file_reader.readAsDataURL(this.image_file);
+
+      file_reader.onload = (e: any) => {
+        this.podcastForm.get('icon').setValue({
+          filename: this.image_file.name,
+          filetype: this.image_file.type,
+          value: file_reader.result.split(",")[1]
+        })
+      }
+
     }
-    file_reader.readAsDataURL(this.image_file);
   }
 
   setFile(event, file) {
@@ -67,7 +69,6 @@ export class FormComponent implements AfterViewChecked  {
     if(this.file && this.file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
       let obUrl = URL.createObjectURL(this.file);
       this.dom_audio.nativeElement.setAttribute('src', obUrl);
-      // document.getElementById('audio').setAttribute('src', obUrl);
     }
   }
 
@@ -77,10 +78,11 @@ export class FormComponent implements AfterViewChecked  {
 
   podcastSubmit(group: FormGroup) {
     var file = this.file;
-    group.icon = this.image_file;
+    debugger;
     let audios = group.get("audios_attributes.0");
     [audios.value.size, audios.value.title, audios.value.mimeType, audios.value.duration] = 
                         [this.file.size, this.file.name, this.file.type, this.duration];
+
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
         let presigned_url = res.presigned_url;
