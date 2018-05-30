@@ -1,6 +1,7 @@
 class PodcastsController < ApplicationController
 
-  def index podcasts = Podcast.all
+  def index
+    podcasts = Podcast.all
     render json: podcasts.to_json(include: :audios)
   end
 
@@ -15,11 +16,8 @@ class PodcastsController < ApplicationController
 
   def create
     podcast = Podcast.new(podcast_params)
-    byebug
     if podcast.save
-      # Arhhhh TO_JSON!
       response = { podcast: podcast.to_json(include: :audios), presigned_url: podcast.presigned_url }
-      byebug
       render json: response, status: 200
     else
       respond_with_errors(podcast.errors)
@@ -29,7 +27,7 @@ class PodcastsController < ApplicationController
   private
 
   def respond_with_errors(errors)
-    render json: { errors: errors }, status: :bad_request # Check status in Angular
+    render json: { errors: errors.to_json }, status: :bad_request # Check status in Angular
   end
 
   def podcast_params

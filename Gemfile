@@ -37,5 +37,7 @@ gem 'omniauth'
 gem 'aws-sdk'
 gem 'figaro'
 gem 'carrierwave'
+gem 'carrierwave-base64'
 gem 'fog-aws'
+
 

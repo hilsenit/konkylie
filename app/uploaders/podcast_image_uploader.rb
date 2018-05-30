@@ -29,9 +29,9 @@ class PodcastImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :thumb do
-    process resize_to_fit: [200, 300]
-  end
+  # version :thumb do
+  #   process resize_to_fit: [200, 300]
+  # end
 
   # For images you might use something like this:
   def extension_whitelist

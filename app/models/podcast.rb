@@ -1,5 +1,5 @@
 class Podcast < ApplicationRecord
-  mount_uploader :icon, PodcastImageUploader
+  mount_base64_uploader :icon, PodcastImageUploader
 
   include Amazon
   attr_accessor :presigned_url

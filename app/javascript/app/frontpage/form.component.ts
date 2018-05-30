@@ -52,15 +52,14 @@ export class FormComponent {
     if(this.image_file) {
       const file_reader = new FileReader();
       file_reader.readAsDataURL(this.image_file);
-
       file_reader.onload = (e: any) => {
+        this.dom_image_src = file_reader.result;
         this.podcastForm.get('icon').setValue({
-          filename: this.image_file.name,
-          filetype: this.image_file.type,
-          value: file_reader.result.split(",")[1]
+          original_filename: this.image_file.name,
+          content_type: this.image_file.type,
+          size: this.image_file.size
         })
       }
-
     }
   }
 
@@ -78,11 +77,11 @@ export class FormComponent {
 
   podcastSubmit(group: FormGroup) {
     var file = this.file;
-    debugger;
     let audios = group.get("audios_attributes.0");
-    [audios.value.size, audios.value.title, audios.value.mimeType, audios.value.duration] = 
-                        [this.file.size, this.file.name, this.file.type, this.duration];
-
+    if(audios.value) {
+      [audios.value.size, audios.value.title, audios.value.mimeType, audios.value.duration] = 
+                              [this.file.size, this.file.name, this.file.type, this.duration];
+    }
     this._podServ.savePodcast(group.value).subscribe(
       res => { 
         let presigned_url = res.presigned_url;

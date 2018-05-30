@@ -7,7 +7,8 @@
       <button (click)="setPodcast(i)">Hør podcast</button>
       <div *ngIf="audio.duration" class="small">Længde: {{ showDomDuration(audio.duration) }}</div>
       <div class="small">Audio fil url: {{audio.url}}</div> 
-      <img *ngIf="podcast.icon" class="image-thumb" [src]="podcast.icon">
+      <hr>
+      <img *ngIf="podcast.icon.url" class="image-thumb" [src]="podcast.icon.url">
     </div>
   </div>
 </div>
