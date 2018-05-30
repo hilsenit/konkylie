@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <base href="/">
     <title>KonkylieApp</title>
     <%= csrf_meta_tags %>
 
@@ -10,16 +11,10 @@
     <%= stylesheet_pack_tag 'application' %>
     <%= javascript_pack_tag 'application' %>
 
-    <!-- PODLOVE REMOVED -->
-    <!-- embed.js, the rest in public folder -->
     <%= javascript_pack_tag "podlove" %>
   </head>
 
   <body>
-
-    <!-- PODLOVE REMOVED -->
-    <%# <div id="example"></div> %>
-    <%# <%= render partial: "partials/podlove_json" %1> %>
 
     <%= yield %>
   </body>

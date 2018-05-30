@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :podcasts, only: [:new, :edit, :delete, :create, :index]
 
+  get '*path' => 'home#index'
+
   root 'home#index'
 
 end

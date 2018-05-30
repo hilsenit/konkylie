@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -15,6 +15,12 @@ import { UserComponent } from './user.component';
 import { FormComponent } from './form.component';
 import { FrontpageComponent } from './frontpage.component';
 
+const appRoutes: Routes = [
+  { path: 'create_podcast', component: FormComponent },
+  { path: 'edit_podcast/:id', component: FormComponent },
+  { path: '', component: FrontpageComponent }
+]
+
 
 
 @NgModule({
@@ -24,7 +30,11 @@ import { FrontpageComponent } from './frontpage.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    ImageUploadModule.forRoot()
+    ImageUploadModule.forRoot(),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true }
+    )
   ],
   declarations: [
     AppComponent,
