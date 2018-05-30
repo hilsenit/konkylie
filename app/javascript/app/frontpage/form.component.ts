@@ -17,7 +17,7 @@ import "./styles/form.component.sass";
 
 export class FormComponent {
   @Output() show_form = new EventEmitter();
-  @ViewChild('dom_file') dom_file: ElementRef;
+  @ViewChild('dom_file_field') dom_file_field: ElementRef;
   @ViewChild('image_file') dom_image_file: ElementRef;
   @ViewChild('dom_audio') dom_audio: ElementRef; 
   uploading_file_to_aws: boolean = false;
@@ -58,12 +58,15 @@ export class FormComponent {
       file_reader.readAsDataURL(this.image_file);
       file_reader.onload = (e: any) => {
         this.podcastForm.get('icon').setValue(file_reader.result);
+        this.dom_image_src = file_reader.result;
       }
     }
   }
 
-  imageRemoved(event) {
-    debugger;
+  removeImage(event) {
+    this.dom_image_src = null;
+    this.dom_file_field.nativeElement.value = '';
+    this.podcastForm.get('icon').setValue(null);
   }
 
   setFile(event, file) {
