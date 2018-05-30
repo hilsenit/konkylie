@@ -1,6 +1,7 @@
 class PodcastsController < ApplicationController
 
   def index
+    # podcasts = Podcast.all
     podcasts = Podcast.all
     render json: podcasts.to_json(include: :audios)
   end
@@ -17,6 +18,7 @@ class PodcastsController < ApplicationController
   def create
     podcast = Podcast.new(podcast_params)
     if podcast.save
+      byebug
       response = { podcast: podcast.to_json(include: :audios), presigned_url: podcast.presigned_url }
       render json: response, status: 200
     else

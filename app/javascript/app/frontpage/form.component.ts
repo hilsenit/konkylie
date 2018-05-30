@@ -1,19 +1,23 @@
 import { Component, AfterViewChecked, Output, EventEmitter, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core'; 
+import { ImageUploadModule } from "angular2-image-upload";
 import { Http } from '@angular/http';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { PodcastService } from './services/podcast.service';
 import { FormService } from './services/form.service';
+
 import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
 
 @Component({
   selector: 'konk-podcast-form',
-  template: FormHTML
+  template: FormHTML,
+  providers: [ ImageUploadModule ]
+    
 })
 
 export class FormComponent {
   @Output() show_form = new EventEmitter();
-  @ViewChild('file') dom_file: ElementRef;
+  @ViewChild('dom_file') dom_file: ElementRef;
   @ViewChild('image_file') dom_image_file: ElementRef;
   @ViewChild('dom_audio') dom_audio: ElementRef; 
   uploading_file_to_aws: boolean = false;
@@ -53,14 +57,13 @@ export class FormComponent {
       const file_reader = new FileReader();
       file_reader.readAsDataURL(this.image_file);
       file_reader.onload = (e: any) => {
-        this.dom_image_src = file_reader.result;
-        this.podcastForm.get('icon').setValue({
-          original_filename: this.image_file.name,
-          content_type: this.image_file.type,
-          size: this.image_file.size
-        })
+        this.podcastForm.get('icon').setValue(file_reader.result);
       }
     }
+  }
+
+  imageRemoved(event) {
+    debugger;
   }
 
   setFile(event, file) {

@@ -12,13 +12,18 @@
   <form [formGroup]="podcastForm" (ngSubmit)="podcastSubmit(podcastForm)">
 
     <div class="form-group">
-      <img *ngIf="dom_image_src" [src]="dom_image_src" class="image-thumb">
-      <input #image_file type="file" class="form-control-file pt-2"
-        (change)="setImageFile($event)" formControlName="icon">
+      <image-upload 
+        (removed)="imageRemoved($event)"
+        buttonCaption="Upload ikon"
+        dropBoxMessage="Slip billede her"
+        [max]="1"
+        ></image-upload>
     </div>
 
     <div class="form-group">
-      <input class="form-control form-control-lg" placeholder="Titlen" type="text" formControlName="title" />
+      <input class="form-control form-control-lg" required placeholder="Titlen" type="text" formControlName="title" />
+      <small *ngIf="!podcastForm.get('title').valid && podcastForm.get('title').dirty" 
+        class="text-muted text-warning">Din podcast skal indeholde en titel</small>
     </div>
 
     <div class="form-group">
@@ -35,16 +40,17 @@
         <h6>Fil:</h6>
 
         <div class="form-group">
-          <input #file type="file" class="form-control-file"
+          <input #dom_file type="file" class="form-control-file"
             (change)="setFile($event, file)">
         </div>
         <audio #dom_audio (canplaythrough)="setDuration($event)" id="audio"></audio>
+        <small *ngIf="!file" class="text-muted text-warning">Din podcast skal have en lydfil</small>
       </div>
 
     </div><!-- formArray end -->
     <hr>
 
-    <input type="submit" value="Gem podcast" class="btn btn-primary"/>
+    <input type="submit" [disabled]="!file || podcastForm.get('title').invalid" value="Gem podcast" class="btn btn-primary"/>
 
   </form>
 

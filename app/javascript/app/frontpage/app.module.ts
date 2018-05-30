@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { ImageUploadModule } from "angular2-image-upload";
 
 import { Angular2TokenService } from 'angular2-token';
 import { AuthService } from './services/auth.service';
@@ -22,7 +23,8 @@ import { FrontpageComponent } from './frontpage.component';
     HttpModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageUploadModule.forRoot()
   ],
   declarations: [
     AppComponent,

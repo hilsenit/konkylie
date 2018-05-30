@@ -11,11 +11,11 @@ export class FormService {
   
   podcastForm() {
     return this._fb.group({
-      title: [""],
+      title: ["", Validators.required],
       subtitle: [""],
       summary: [""],
       publicationDate: [""],
-      icon: null,
+      icon: [null, Validators.required],
       poster: [""],
       audios_attributes: this._fb.array([
         this.initPodcastAudio()
