@@ -1,4 +1,5 @@
 declare var podlovePlayer;
+import { Router } from '@angular/router';
 import { Component, Inject, OnInit, Output, Input, EventEmitter, QueryList, ViewChild, ViewChildren, ElementRef } from '@angular/core'; 
 import { PodcastService } from './services/podcast.service';
 import { Podcast } from './models/podcast';
@@ -22,6 +23,7 @@ export class FrontpageComponent implements OnInit {
 
   constructor(
     private _podServ: PodcastService,
+    private _router: Router
   ){  }
 
   ngOnInit() {
@@ -31,6 +33,10 @@ export class FrontpageComponent implements OnInit {
       },
       err => this.error_message = "Det var desværre ikke muligt at loade podcasts fra serveren. Prøv igen."
     )
+  }
+
+  updatePodcast(id: number): void {
+    this._router.navigate(["/edit_podcast", id]);
   }
 
   showDomDuration(dur: number): string {

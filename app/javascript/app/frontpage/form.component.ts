@@ -1,12 +1,17 @@
-import { Component, AfterViewChecked, Output, EventEmitter, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core'; 
+import { Component, AfterViewChecked, Output, EventEmitter, ViewChild, OnInit, ElementRef, QueryList, ViewChildren } from '@angular/core'; 
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { ImageUploadModule } from "angular2-image-upload";
 import { Http } from '@angular/http';
 import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
 import { PodcastService } from './services/podcast.service';
 import { FormService } from './services/form.service';
+import { Podcast } from './models/podcast';
+
 
 import FormHTML from './templates/form.html';
 import "./styles/form.component.sass";
+
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'konk-podcast-form',
@@ -15,7 +20,7 @@ import "./styles/form.component.sass";
     
 })
 
-export class FormComponent {
+export class FormComponent implements OnInit {
   @Output() show_form = new EventEmitter();
   @ViewChild('dom_file_field') dom_file_field: ElementRef;
   @ViewChild('image_file') dom_image_file: ElementRef;
@@ -32,10 +37,23 @@ export class FormComponent {
 
   constructor(
     private _podServ: PodcastService,
-    private _formServ: FormService
+    private _formServ: FormService, 
+    private _route: ActivatedRoute,
+    private _router: Router
   ) { 
-    this.podcastForm = _formServ.podcastForm();
   } 
+
+  ngOnInit() {
+    this.podcastForm = this._formServ.podcastForm(); 
+    if(Object.keys(this._route.params).length) { // Check if there's any params
+      this._route.params
+      .switchMap((params: Params) => this._podServ.getPodcast(+params['id']))
+      .subscribe((podcast_json) => {
+        this.podcastForm.patchValue(podcast_json) },
+        (err) => console.log(err)
+      )
+    }
+  }
 
   showFrontpage() {
     this.show_form.emit(false) 

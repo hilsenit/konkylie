@@ -30,6 +30,10 @@ export class PodcastService {
     return this._http.get("/podcasts.json").pipe(map(this.extractData));
   }
 
+  getPodcast(id: number): Observable<Podcast> {
+    return this._http.get(`/podcasts/${id}/edit`).pipe(map(this.extractData));
+  }
+
   savePodcast(podcast_params: Podcast): Observable<Podcast> {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

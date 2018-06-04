@@ -10,6 +10,12 @@ class PodcastsController < ApplicationController
   end
 
   def edit
+    podcast = Podcast.find(params[:id])
+    response = podcast.to_json(include: :audios)
+  rescue
+    render json: {error: "Din podcast kunne ikke findes"}, status: :bad_request
+  else #Only if the code is run without error!
+    render json: response, status: 200
   end
 
   def delete
