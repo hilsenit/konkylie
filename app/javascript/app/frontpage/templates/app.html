@@ -1,17 +1,5 @@
 <div class="container">
   <a routerLink="create_podcast" routerLinkActive="d-none">Opret podcast</a>
   <div *ngIf="error_message" class="notice bg-warning text-center">{{error_message}}</div>
-  <!-- <div *ngIf="(user_logged_in | async)" class="notice bg-success text-center">Du er logged ind</div> -->
   <router-outlet></router-outlet>
-  
-  <!-- <konk-frontpage --> 
-  <!--   *ngIf="!show_form" -->
-  <!--   (show_form)="show_form= $event" -->
-  <!--   [logged_in]="logged_in"> --> 
-  <!-- </konk-frontpage> -->
-  
-  <!-- <konk-podcast-form -->
-  <!--    *ngIf="show_form" -->
-  <!--    (show_form)="show_form = $event"> -->
-  <!-- </konk-podcast-form> -->
 </div>

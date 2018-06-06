@@ -13,7 +13,6 @@ class PodcastsController < ApplicationController
     podcast = Podcast.find(params[:id])
     response = podcast.to_json(include: :audios)
   rescue
-    byebug
     render json: {error: "Din podcast kunne ikke findes"}, status: :bad_request
   else #Only if the code is run without error!
     render json: response, status: 200
@@ -25,7 +24,17 @@ class PodcastsController < ApplicationController
   def create
     podcast = Podcast.new(podcast_params)
     if podcast.save
-      byebug
+      response = { podcast: podcast.to_json(include: :audios), presigned_url: podcast.presigned_url }
+      render json: response, status: 200
+    else
+      respond_with_errors(podcast.errors)
+    end
+  end
+
+  def update
+    podcast = Podcast.find(params[:id])
+    byebug
+    if podcast.update_attributes(podcast_params)
       response = { podcast: podcast.to_json(include: :audios), presigned_url: podcast.presigned_url }
       render json: response, status: 200
     else

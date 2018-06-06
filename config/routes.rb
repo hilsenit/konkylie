@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   mount_devise_token_auth_for 'User', at: 'auth'
 
-  resources :podcasts, only: [:new, :edit, :delete, :create, :index]
+  resources :podcasts, only: [:new, :edit, :delete, :create, :update, :index]
 
   get '*path' => 'home#index'
 

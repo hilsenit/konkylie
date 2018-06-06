@@ -12,8 +12,11 @@ import { FormService } from './services/form.service';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
-import { FormComponent } from './form.component';
 import { FrontpageComponent } from './frontpage.component';
+
+import { NewPodcastComponent } from './new_podcast.component';
+import { EditPodcastComponent } from './edit_podcast.component';
+import { FormComponent } from './form.component';
 
 import { AppRoutingModule } from './app_routing.module';
 
@@ -32,7 +35,9 @@ import { AppRoutingModule } from './app_routing.module';
     AppComponent,
     UserComponent,
     FormComponent,
-    FrontpageComponent
+    FrontpageComponent,
+    EditPodcastComponent,
+    NewPodcastComponent
   ],
   providers: [
     Angular2TokenService,

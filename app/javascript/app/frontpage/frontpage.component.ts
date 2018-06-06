@@ -1,6 +1,6 @@
 declare var podlovePlayer;
 import { Router } from '@angular/router';
-import { Component, Inject, OnInit, Output, Input, EventEmitter, QueryList, ViewChild, ViewChildren, ElementRef } from '@angular/core'; 
+import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, ElementRef } from '@angular/core'; 
 import { PodcastService } from './services/podcast.service';
 import { Podcast } from './models/podcast';
 import FrontpageHTML from './templates/frontpage.html';
@@ -16,7 +16,6 @@ export class FrontpageComponent implements OnInit {
   @ViewChildren('dom_podcasts') dom_podcasts: QueryList<ElementRef>;
   @ViewChild('audio') audio: ElementRef;
   @Input() logged_in: boolean = false; 
-  @Output() show_form = new EventEmitter();
   shell_image: string = ShellImage;
   error_message: string;
   podcasts: Podcast[];
@@ -49,10 +48,6 @@ export class FrontpageComponent implements OnInit {
     let podcast = this.podcasts[pod_i];
     let podcast_dom = this.dom_podcasts.toArray()[pod_i].nativeElement;
     podlovePlayer(podcast_dom, this.returnJSON(podcast));
-  }
-
-  showForm() {
-    this.show_form.emit(true);
   }
 
   setPodloveDuration(dur: number): string { // Nogenlunde midlertidigt

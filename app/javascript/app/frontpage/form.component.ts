@@ -1,68 +1,51 @@
-import { Component, AfterViewChecked, Output, EventEmitter, ViewChild, OnInit, ElementRef, QueryList, ViewChildren } from '@angular/core'; 
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { Component, OnChanges, Input, ViewChild, ElementRef } from '@angular/core'; 
+import { ActivatedRoute } from '@angular/router';
 import { ImageUploadModule } from "angular2-image-upload";
-import { Http } from '@angular/http';
-import { Validators, FormGroup, FormControl, FormBuilder, FormArray, AbstractControl } from '@angular/forms';
-import { PodcastService } from './services/podcast.service';
+import { FormGroup } from '@angular/forms';
 import { FormService } from './services/form.service';
+import { PodcastService } from './services/podcast.service';
 import { Podcast } from './models/podcast';
 
-
 import FormHTML from './templates/form.html';
-import "./styles/form.component.sass";
 
-import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'konk-podcast-form',
+  selector: 'konk-form',
   template: FormHTML,
   providers: [ ImageUploadModule ]
-    
 })
 
-export class FormComponent implements OnInit {
-  @Output() show_form = new EventEmitter();
+export class FormComponent implements OnChanges {
+  @Input('new') new_form;
+  @Input('form_data') form_data: any;
   @ViewChild('dom_file_field') dom_file_field: ElementRef;
   @ViewChild('image_file') dom_image_file: ElementRef;
   @ViewChild('dom_audio') dom_audio: ElementRef; 
-  uploading_file_to_aws: boolean = false;
-  file: File;
-  successfull_save: boolean = false;
-  error_message: string; 
-  podcast_title: string; 
+
   podcastForm: FormGroup;
+  file: File;
+  podcast_title: string; 
   duration: number;
+  uploading_file_to_aws: boolean = false;
+  error_message: string; 
   image_file: File = null;
   dom_image_src: string = undefined;
+  successfull_save: boolean = false;
+  runned: boolean = false;
+  id: number;
 
   constructor(
     private _podServ: PodcastService,
-    private _formServ: FormService, 
-    private _route: ActivatedRoute,
-    private _router: Router
-  ) { 
+    private _formServ: FormService,
+    private _route: ActivatedRoute
+  ) {
+    this.podcastForm = this._formServ.podcastForm();
   } 
 
-  ngOnInit() {
-    this.podcastForm = this._formServ.podcastForm(); 
-    this._route.params.subscribe((params: Params) => { 
-      if (!params.value) {
-        console.log("CREATE - NEW FORM");
-        return; 
-      } else {
-        this._route.params.switchMap((params: Params): any => {
-          this._podServ.getPodcast(+params['id']);
-        })
-        .subscribe((podcast_json) => {
-            console.log("EDIT - SET FORM");
-            debugger;
-            // if (podcast_json.icon.url) { this.dom_image_src = podcast_json.icon.url };
-            // this.podcastForm.patchValue(podcast_json);
-          },
-          (err) => console.log(err)
-        )
-      }
-    })
+  ngOnChanges() {
+    if(this.form_data) {
+      this.podcastForm.patchValue(this.form_data); //From edit.component
+    }
   }
 
   setFile(event, file) {
@@ -71,10 +54,6 @@ export class FormComponent implements OnInit {
       let obUrl = URL.createObjectURL(this.file);
       this.dom_audio.nativeElement.setAttribute('src', obUrl);
     }
-  }
-
-  showFrontpage() {
-    this.show_form.emit(false) 
   }
 
   getDomDuration(dur: number): {minutes: number, seconds: number}  {
@@ -109,7 +88,7 @@ export class FormComponent implements OnInit {
     return files.length > 0 ? files[0] : null; 
   }
 
-  podcastSubmit(group: FormGroup) {
+  podcastNewSubmit(group: FormGroup) {
     var file = this.file;
     let audios = group.get("audios_attributes.0");
     if(audios.value) {
@@ -123,7 +102,31 @@ export class FormComponent implements OnInit {
         this._podServ.uploadToS3(file, presigned_url).subscribe(
           aws_res => { 
             this.uploading_file_to_aws = false;
-            this.show_form.emit(false); // Remove form and show frontpage
+          } 
+        )
+      },
+      err => {
+        this.error_message = err.json().errors.title[0];
+        console.log(err);
+      }
+    )
+  }
+
+  podcastEditSubmit(group: FormGroup) {
+    var file = this.file;
+    let audios = group.get("audios_attributes.0");
+    if(audios.value) {
+      [audios.value.size, audios.value.title, audios.value.mimeType, audios.value.duration] = 
+                              [this.file.size, this.file.name, this.file.type, this.duration];
+    }
+    let podcast_id = this._route.snapshot.params.id;
+    this._podServ.updatePodcast(podcast_id, group.value).subscribe(
+      res => { 
+        let presigned_url = res.presigned_url;
+        this.uploading_file_to_aws = true;
+        this._podServ.uploadToS3(file, presigned_url).subscribe(
+          aws_res => { 
+            this.uploading_file_to_aws = false;
           } 
         )
       },

@@ -41,6 +41,13 @@ export class PodcastService {
     return this._http.post("/podcasts", data, { headers: headers })
       .pipe(map(this.extractData))
   }
-  
+
+  updatePodcast(id: number, podcast_params: Podcast): Observable<Podcast> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let data = JSON.stringify({"podcast": podcast_params}); // Rails need the parent param "podcast"
+    return this._http.patch(`/podcasts/${id}`, data, { headers: headers })
+      .pipe(map(this.extractData))
+  }
 
 }

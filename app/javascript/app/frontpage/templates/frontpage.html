@@ -2,6 +2,7 @@
 <div *ngIf="podcasts" class="row">
   <div #dom_podcasts *ngFor="let podcast of podcasts; let i=index" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
     <div class="title">Podcast titel: {{podcast.title}}</div>
+    <div class="small text-gray">{{podcast.subtitle}}</div>
     <div class="border" *ngFor="let audio of podcast.audios; let aud_i=index">
       <button (click)="setPodcast(i)">Hør podcast</button>
       <div *ngIf="audio.duration" class="small">Længde: {{ showDomDuration(audio.duration) }}</div>
