@@ -12,9 +12,9 @@
   <form [formGroup]="podcastForm" (ngSubmit)="podcastSubmit(podcastForm)">
 
     <div class="form-group">
-      <img *ngIf="dom_image_src" [src]="dom_image_src">
+      <img *ngIf="dom_image_src" [src]="dom_image_src" class="image-thumb">
       <input *ngIf="dom_image_src" class="btn btn-warning py-2 d-block" type="button" value="Fjern billede" (click)="removeImage($event)">
-      <input #dom_file_field (change)="setImageFile($event)" type="file">
+      <input *ngIf="!dom_image_src" #dom_file_field (change)="setImageFile($event)" type="file" formControlName="icon">
     </div>
 
     <div class="form-group">

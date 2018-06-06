@@ -45,13 +45,31 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
     this.podcastForm = this._formServ.podcastForm(); 
-    if(Object.keys(this._route.params).length) { // Check if there's any params
-      this._route.params
-      .switchMap((params: Params) => this._podServ.getPodcast(+params['id']))
-      .subscribe((podcast_json) => {
-        this.podcastForm.patchValue(podcast_json) },
-        (err) => console.log(err)
-      )
+    this._route.params.subscribe((params: Params) => { 
+      if (!params.value) {
+        console.log("CREATE - NEW FORM");
+        return; 
+      } else {
+        this._route.params.switchMap((params: Params): any => {
+          this._podServ.getPodcast(+params['id']);
+        })
+        .subscribe((podcast_json) => {
+            console.log("EDIT - SET FORM");
+            debugger;
+            // if (podcast_json.icon.url) { this.dom_image_src = podcast_json.icon.url };
+            // this.podcastForm.patchValue(podcast_json);
+          },
+          (err) => console.log(err)
+        )
+      }
+    })
+  }
+
+  setFile(event, file) {
+    this.file = this.getOneFile(event.target.files);
+    if(this.file && this.file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
+      let obUrl = URL.createObjectURL(this.file);
+      this.dom_audio.nativeElement.setAttribute('src', obUrl);
     }
   }
 
@@ -85,14 +103,6 @@ export class FormComponent implements OnInit {
     this.dom_image_src = null;
     this.dom_file_field.nativeElement.value = '';
     this.podcastForm.get('icon').setValue(null);
-  }
-
-  setFile(event, file) {
-    this.file = this.getOneFile(event.target.files);
-    if(this.file && this.file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
-      let obUrl = URL.createObjectURL(this.file);
-      this.dom_audio.nativeElement.setAttribute('src', obUrl);
-    }
   }
 
   getOneFile(files: FileList): File {
