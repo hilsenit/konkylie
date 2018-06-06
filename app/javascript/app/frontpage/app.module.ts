@@ -9,6 +9,7 @@ import { Angular2TokenService } from 'angular2-token';
 import { AuthService } from './services/auth.service';
 import { PodcastService } from './services/podcast.service';
 import { FormService } from './services/form.service';
+import { CustomFunctionService } from './services/custom.service';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
@@ -43,7 +44,8 @@ import { AppRoutingModule } from './app_routing.module';
     Angular2TokenService,
     AuthService,
     PodcastService,
-    FormService
+    FormService,
+    CustomFunctionService
   ],
   bootstrap: [AppComponent]
 })

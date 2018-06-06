@@ -23,7 +23,7 @@ export class EditPodcastComponent implements OnInit {
   ){}
 
   ngOnInit() {
-    let param_id = this._route.snapshot.params.id
+    let param_id = this._route.snapshot.params.id; // Lettere måde at få et id på
     this._podServ.getPodcast(+param_id).subscribe(
     (res_json) => { 
       this.formData = res_json;

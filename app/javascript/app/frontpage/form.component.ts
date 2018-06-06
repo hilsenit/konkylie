@@ -4,7 +4,9 @@ import { ImageUploadModule } from "angular2-image-upload";
 import { FormGroup } from '@angular/forms';
 import { FormService } from './services/form.service';
 import { PodcastService } from './services/podcast.service';
+import { CustomFunctionService } from './services/custom.service';
 import { Podcast } from './models/podcast';
+import { Audio } from './models/audio';
 
 import FormHTML from './templates/form.html';
 
@@ -30,6 +32,7 @@ export class FormComponent implements OnChanges {
   error_message: string; 
   image_file: File = null;
   dom_image_src: string = undefined;
+  dom_file: Audio;
   successfull_save: boolean = false;
   runned: boolean = false;
   id: number;
@@ -37,15 +40,26 @@ export class FormComponent implements OnChanges {
   constructor(
     private _podServ: PodcastService,
     private _formServ: FormService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _cust_func: CustomFunctionService
   ) {
     this.podcastForm = this._formServ.podcastForm();
   } 
 
   ngOnChanges() {
-    if(this.form_data) {
+    if(this.form_data && !this.runned) {
+      if(this.form_data.icon) {this.dom_image_src = this.form_data.icon.url };
+      if(this.form_data.audios[0]) {
+        this.dom_file = this.form_data.audios[0];
+      }
+      this.runned = true;
       this.podcastForm.patchValue(this.form_data); //From edit.component
     }
+  }
+
+  removeFile(event) {
+    this.dom_file = null;
+    this.dom_audio.nativeElement.setAttribute('src', '');
   }
 
   setFile(event, file) {

@@ -2,17 +2,13 @@
 <div *ngIf="uploading_file_to_aws">
   <div class="text-center">Filen er ved at blive uploadet til en ekstern server</div>
   <div class="progress">
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-  </div>
-</div>
-<div *ngIf="error_message" class="notice bg-warning text-white text-center">Løs fejlen før du fortsætter: {{error_message}}</div>
-<div class="container mt-4">
+    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div> </div> </div> <div *ngIf="error_message" class="notice bg-warning text-white text-center">Løs fejlen før du fortsætter: {{error_message}}</div> <div class="container mt-4">
 
   <form [formGroup]="podcastForm" (ngSubmit)="new_form ? podcastNewSubmit(podcastForm) : podcastEditSubmit(podcastForm)">
 
     <div class="form-group">
-      <img *ngIf="dom_image_src" [src]="dom_image_src" class="image-thumb">
-      <input *ngIf="dom_image_src" class="btn btn-warning py-2 d-block" type="button" value="Fjern billede" (click)="removeImage($event)">
+      <img *ngIf="dom_image_src" [src]="dom_image_src" class="image-thumb py-2">
+      <input *ngIf="dom_image_src" class="btn btn-warning py-2 d-block" type="button" value="Upload nyt billede" (click)="removeImage($event)">
       <input *ngIf="!dom_image_src" #dom_file_field (change)="setImageFile($event)" type="file" formControlName="icon">
     </div>
 
@@ -30,20 +26,30 @@
       <textarea class="form-control" placeholder="Resumé" rows="3" formControlName="summary"></textarea>
     </div>
 
-    <div formArrayName="audios_attributes" *ngFor="let audio of podcastForm.get('audios_attributes').controls; let i=index;">
+    <div *ngIf="dom_file">
+      <strong>Audio, der er uploadet: </strong>
+      <div>Titel: {{dom_file.title}}</div>
+      <div>Type: {{dom_file.mimeType}}</div>
+      <div>Størrelse: {{dom_file.size}}</div>
+      <div class="pb-2" [innerHTML]="'Længde: ' + _cust_func.setPodloveDuration(dom_file.duration)"></div>
+      <input class="btn btn-warning py-2 d-block" type="button" value="Upload ny audio" (click)="removeFile($event)">
+    </div>
 
-      <div class="border p-4" [formGroupName]="i">
-        <h6>Fil:</h6>
-
-        <div class="form-group">
-          <input #dom_file type="file" class="form-control-file"
-            (change)="setFile($event, file)">
+    
+    <div *ngIf="!dom_file" class="audios-wrapper">
+      <div formArrayName="audios_attributes" *ngFor="let audio of podcastForm.get('audios_attributes').controls; let i=index;">
+        <div class="border p-4" [formGroupName]="i">
+          <h6>Fil:</h6>
+      
+          <div class="form-group">
+            <input #dom_file type="file" class="form-control-file"
+              (change)="setFile($event, file)">
+          </div>
+          <small *ngIf="!file" class="text-warning">Din podcast skal have en lydfil!</small>
+          <audio #dom_audio (canplaythrough)="setDuration($event)" id="audio"></audio>
         </div>
-        <small *ngIf="!file" class="text-warning">Din podcast skal have en lydfil!</small>
-        <audio #dom_audio (canplaythrough)="setDuration($event)" id="audio"></audio>
-      </div>
-
-    </div><!-- formArray end -->
+      </div><!-- audio of audios -->
+    </div><!-- audios-wrapper -->
     <hr>
 
     <input type="submit" [disabled]="!file || podcastForm.get('title').invalid" value="Gem podcast" class="btn btn-primary"/>

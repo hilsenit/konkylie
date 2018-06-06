@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, Input, QueryList, ViewChild, ViewChildren, ElementRef } from '@angular/core'; 
 import { PodcastService } from './services/podcast.service';
 import { Podcast } from './models/podcast';
+import { CustomFunctionService } from './services/custom.service';
 import FrontpageHTML from './templates/frontpage.html';
 import ShellImage from '../../images/shell.png';
 import './styles/frontpage.component.sass';
@@ -22,7 +23,8 @@ export class FrontpageComponent implements OnInit {
 
   constructor(
     private _podServ: PodcastService,
-    private _router: Router
+    private _router: Router,
+    private _cust_func: CustomFunctionService
   ){  }
 
   ngOnInit() {
@@ -50,19 +52,13 @@ export class FrontpageComponent implements OnInit {
     podlovePlayer(podcast_dom, this.returnJSON(podcast));
   }
 
-  setPodloveDuration(dur: number): string { // Nogenlunde midlertidigt
-    let minutes = Math.floor(dur / 60);
-    let rest_seconds = dur - (60 * minutes);
-    return `00:${minutes}:${rest_seconds}`;
-  }
-  
   returnJSON(podcast: Podcast): any {
       return {
         title: podcast.title,
         subtitle: podcast.subtitle,
         summary: podcast.summary,
         publicationDate: podcast.publicationDate,
-        duration: this.setPodloveDuration(podcast.audios[0].duration),
+        duration: this._cust_func.setPodloveDuration(podcast.audios[0].duration),
         // Mangler!
         // poster: 'https://freakshow.fm/wp-content/cache/podlove/04/662a9d4edcf77ea2abe3c74681f509/freak-show_200x200.jpg',
         // show: {
