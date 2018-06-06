@@ -14,6 +14,7 @@ import { CustomFunctionService } from './services/custom.service';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
 import { FrontpageComponent } from './frontpage.component';
+import { ShowPodcastComponent } from './show_podcast.component';
 
 import { NewPodcastComponent } from './new_podcast.component';
 import { EditPodcastComponent } from './edit_podcast.component';
@@ -38,7 +39,8 @@ import { AppRoutingModule } from './app_routing.module';
     FormComponent,
     FrontpageComponent,
     EditPodcastComponent,
-    NewPodcastComponent
+    NewPodcastComponent,
+    ShowPodcastComponent
   ],
   providers: [
     Angular2TokenService,
