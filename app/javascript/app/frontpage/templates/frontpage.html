@@ -1,15 +1,14 @@
 <h1 class="frontpage-header">Forside</h1>
-<div *ngIf="podcasts" class="row">
+<div *ngIf="podcasts" class="row pos-rel">
   <div #dom_podcasts 
     *ngFor="let podcast of podcasts; let i=index" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 c-pointer"
     (click)="openModal(podcast.id)">
     <div class="border" *ngFor="let audio of podcast.audios; let aud_i=index">
-      <button (click)="setPodcast(i)">Hør podcast</button>
-      <hr>
+      <!-- <button (click)="setPodcast(i)">Hør podcast</button> -->
       <img *ngIf="podcast.icon.url" class="image-thumb" [src]="podcast.icon.url">
     </div>
   </div><!-- ngFor -->
+  <konk-podcast-modal *ngIf="podcast_data" [podcast_data]="podcast_data"></konk-podcast-modal>
 </div>
 
-<konk-podcast-modal [podcast_data]="podcast_data"></konk-podcast-modal>
 
