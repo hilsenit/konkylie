@@ -1,15 +1,12 @@
 <h1 class="frontpage-header">Forside</h1>
 <div *ngIf="podcasts" class="row">
-  <div #dom_podcasts *ngFor="let podcast of podcasts; let i=index" class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-    <div class="title">Podcast titel: {{podcast.title}}</div>
-    <div class="small text-gray">{{podcast.subtitle}}</div>
+  <div #dom_podcasts 
+    *ngFor="let podcast of podcasts; let i=index" class="col-lg-3 col-md-4 col-sm-6 col-xs-12 c-pointer"
+    (click)="openModal(podcast.id)">
     <div class="border" *ngFor="let audio of podcast.audios; let aud_i=index">
       <button (click)="setPodcast(i)">Hør podcast</button>
-      <div *ngIf="audio.duration" class="small">Længde: {{ showDomDuration(audio.duration) }}</div>
-      <div class="small">Audio fil url: {{audio.url}}</div> 
       <hr>
       <img *ngIf="podcast.icon.url" class="image-thumb" [src]="podcast.icon.url">
-      <button (click)="updatePodcast(podcast.id)">Redigér podcast</button>
     </div>
   </div><!-- ngFor -->
 </div>

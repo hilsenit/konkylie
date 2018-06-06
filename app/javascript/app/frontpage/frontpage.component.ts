@@ -20,6 +20,7 @@ export class FrontpageComponent implements OnInit {
   shell_image: string = ShellImage;
   error_message: string;
   podcasts: Podcast[];
+  podcast_data: Podcast = null;
 
   constructor(
     private _podServ: PodcastService,
@@ -33,6 +34,13 @@ export class FrontpageComponent implements OnInit {
         this.podcasts = res;
       },
       err => this.error_message = "Det var desværre ikke muligt at loade podcasts fra serveren. Prøv igen."
+    )
+  }
+
+  openModal(podcast_id: number): void {
+    this._podServ.getPodcast(podcast_id).subscribe(
+      (pod_json) => { this.podcast_data = pod_json },
+      console.error
     )
   }
 
